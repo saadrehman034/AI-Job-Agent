@@ -1,0 +1,34 @@
+services:
+  - type: web
+    name: ai-job-agent-api
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: LLM_MODEL
+        value: gemini-2.5-flash
+      - key: ENABLE_CRITIC_LOOP
+        value: "true"
+      - key: ENABLE_EMAIL_SEND
+        value: "false"
+      - key: ENABLE_BROWSER_AUTOMATION
+        value: "false"
+      - key: MAX_RETRIES
+        value: "3"
+      - key: DATA_DIR
+        value: "./data"
+      - key: SQLITE_DB_PATH
+        value: "./data/applications.db"
+      - key: FAISS_INDEX_PATH
+        value: "./data/faiss_index"
+
+  - type: web
+    name: ai-job-agent-ui
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: streamlit run ui/streamlit_app.py --server.port $PORT --server.address 0.0.0.0
+    envVars:
+      - key: API_BASE_URL
+        sync: false
