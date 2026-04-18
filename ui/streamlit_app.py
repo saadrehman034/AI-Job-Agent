@@ -488,9 +488,9 @@ if generate_btn and can_generate:
         job_analysis = result.get("job_analysis", {})
         st.markdown(f"## {job_analysis.get('job_title', 'Unknown Role')}")
         st.markdown(f"**Company:** {job_analysis.get('company_name', '')}")
-        st.markdown(f"**Level:** {job_analysis.get('experience_level', '').title()}")
+        st.markdown(f"**Level:** {(job_analysis.get('experience_level') or '').title()}")
         st.markdown(f"**Experience:** {job_analysis.get('experience_years', 'Not specified')}")
-        st.markdown(f"**Remote Policy:** {job_analysis.get('remote_policy', 'Unknown').title()}")
+        st.markdown(f"**Remote Policy:** {(job_analysis.get('remote_policy') or 'Unknown').title()}")
         if job_analysis.get("salary_range"):
             st.markdown(f"**Salary:** {job_analysis['salary_range']}")
 
